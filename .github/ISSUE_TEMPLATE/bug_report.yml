@@ -1,5 +1,5 @@
 name: Bug report
-description: Report a problem with the overlay, the docs or the website.
+description: Report a problem with the overlay or documentation.
 title: "bug: "
 labels:
   - bug
@@ -7,9 +7,8 @@ body:
   - type: markdown
     attributes:
       value: |
-        Thanks for the report. Keep it short and reproducible.
-
-        Do not paste secrets, tokens, cookies or private server data. If the problem is a security issue, use [SECURITY.md](https://github.com/kacky-code/kacky-live/blob/main/SECURITY.md) instead.
+        Thanks for reporting! Please keep descriptions clear and reproducible.
+        If you suspect a security issue, report it privately via [SECURITY.md](https://github.com/kacky-code/kacky-live/blob/main/SECURITY.md).
   - type: textarea
     id: happened
     attributes:
@@ -28,7 +27,7 @@ body:
     id: steps
     attributes:
       label: Steps to reproduce
-      description: List the smallest set of steps that shows the problem.
+      description: List the steps that reproduce the problem.
       placeholder: |
         1. Open the overlay with ...
         2. Wait for ...
@@ -39,20 +38,13 @@ body:
     id: versions
     attributes:
       label: Browser and OBS version
-      description: Include the browser and OBS versions you used.
+      description: Optional for doc bugs; helpful for overlay or visual issues.
       placeholder: Chrome 130, OBS Studio 31.0
     validations:
-      required: true
+      required: false
   - type: textarea
     id: screenshot
     attributes:
-      label: Screenshot at 1920x1080
-      description: For visual bugs, add a screenshot at 1920x1080 and mark what is wrong.
-      placeholder: Drag the screenshot here or paste a link.
-  - type: checkboxes
-    id: safety
-    attributes:
-      label: Before you submit
-      options:
-        - label: I removed secrets, tokens, cookies and private server data from this report.
-          required: true
+      label: Screenshot
+      description: For visual bugs, attach a screenshot or GIF.
+      placeholder: Drag a screenshot here or paste a link.

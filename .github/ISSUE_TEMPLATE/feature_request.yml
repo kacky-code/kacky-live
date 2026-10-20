@@ -1,5 +1,5 @@
 name: Feature request
-description: Suggest a change for the overlay or the project.
+description: Suggest an idea or enhancement for Kacky Live.
 title: "feat: "
 labels:
   - enhancement
@@ -7,21 +7,20 @@ body:
   - type: markdown
     attributes:
       value: |
-        Describe the problem first. A solution is easier to review when we understand the use case.
-
-        Kacky Live is read-only. It uses public `GET` endpoints and does not add backend endpoints.
+        Have an idea for Kacky Live? Let us know what you'd like to see!
+        Tip: Kacky Live is a client-side browser overlay powered by the public KackyGG API.
   - type: textarea
     id: problem
     attributes:
-      label: The problem
-      description: What is hard, missing or confusing today?
+      label: Problem or use case
+      description: What is hard, missing, or could be improved?
     validations:
       required: true
   - type: textarea
     id: proposal
     attributes:
-      label: The proposed change
-      description: Describe the behaviour you want and where it appears.
+      label: Proposed idea
+      description: Describe what you would like to see happen.
     validations:
       required: true
   - type: textarea
@@ -29,13 +28,3 @@ body:
     attributes:
       label: Alternatives considered
       description: What else did you try or consider?
-  - type: checkboxes
-    id: scope
-    attributes:
-      label: Scope check
-      description: If either answer is no, this request is outside the current scope. Open a question issue first. The API is owned by another project.
-      options:
-        - label: This request works with public `GET` endpoints only.
-          required: true
-        - label: This request does not need a new backend endpoint.
-          required: true

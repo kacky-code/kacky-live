@@ -1,44 +1,30 @@
-# Contributing
+# Contributing to Kacky Live
 
-Kacky Live is an open source project. Keep changes small and easy to review.
+Thanks for helping build Kacky Live! To keep reviews fast and painless, we aim for small, focused pull requests tied to open issues.
 
-By participating, you agree to follow the [`CODE_OF_CONDUCT.md`](CODE_OF_CONDUCT.md).
+By participating, you agree to follow our [`CODE_OF_CONDUCT.md`](CODE_OF_CONDUCT.md).
 
 ## Workflow
 
-- Work on a branch. Never push to `main`.
-- Open one pull request per issue.
-- Link the issue in the pull request body.
-- Keep the pull request under about 400 changed lines. Split larger work.
-- Ask in the issue before adding a dependency.
-- Pull requests need one approving review from a maintainer.
+1. **Pick an issue:** Browse open issues or open a new one to discuss a change before writing a lot of code.
+2. **Branch off `main`:** Create a feature branch on your fork (one pull request per issue).
+3. **Keep PRs small:** Aim for under ~400 changed lines so reviews stay quick.
+4. **Check before adding dependencies:** Comment in the issue before introducing a new npm package.
+5. **Include visuals:** If your PR changes the UI, include a `1920x1080` screenshot in the PR description.
 
-## Rules
+## Architecture & Overlay Rules
 
-- Read `README.md` and `docs/API-NOTES.md` before you start.
-- Public `GET` endpoints only. No writes, no auth, no cookies.
-- No secrets in the repository or the client bundle.
-- No new backend endpoints. If one is missing, write the case in the issue and wait.
-- No scraping. Use the documented API.
-- No changes to `kacky-ds` or the main website.
-- Behaviour changes start with a failing test.
-- Strip Trackmania colour codes before rendering a name.
-- Keep the overlay quiet. No animation that pulls attention from the game.
+Before writing code, check [`docs/API-NOTES.md`](docs/API-NOTES.md) for endpoint details.
 
-## Review
+- **Read-only public API:** We only use anonymous `GET` requests against the documented KackyGG `/v1` endpoints. No auth, cookies, scraping, or custom backend endpoints.
+- **No secrets in the repo:** Never commit tokens, private server logins, or `.env` files.
+- **Strip Trackmania formatting:** Always strip Trackmania colour and style codes (`$f00`, `$i`, `$o`, `$w`, etc.) before rendering player or map names.
+- **Keep the overlay quiet:** Streamers are trying to land frame-perfect tricks. Avoid flashy animations or popups that pull attention away from the car.
+- **Test behaviour changes:** Add or update unit tests when changing data parsing, polling, or state logic.
 
-- A maintainer reviews every pull request.
-- A pull request needs one approval before it merges.
-- A visual change needs a screenshot at 1920x1080 in the pull request.
-- Only maintainers merge to `main`.
+## Reviews
 
-## Maintainers
+All pull requests are reviewed and merged by the maintainers:
 
 - [@Thorbenl](https://github.com/Thorbenl)
 - [@bompi-me](https://github.com/bompi-me)
-
-## Writing
-
-- Plain English, active voice.
-- No em dashes in code comments, commit messages or pull request bodies.
-- Short commit messages that say what changed.

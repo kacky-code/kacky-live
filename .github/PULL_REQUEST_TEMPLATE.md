@@ -1,6 +1,6 @@
 ## Summary
 
-<!-- What changed, and why? Keep it short. -->
+<!-- What changed, and why? -->
 
 ## Linked issue
 
@@ -8,14 +8,11 @@ Closes #
 
 ## Screenshots
 
-<!-- For visual changes, add a screenshot at 1920x1080. Remove this section if it does not apply. -->
+<!-- For visual changes, attach a 1920x1080 screenshot or GIF. Delete if not applicable. -->
 
 ## Checklist
 
-- [ ] No secrets, tokens, cookies or private server data
-- [ ] Public `GET` endpoints only
-- [ ] No new backend endpoint
-- [ ] Tests added or updated where behaviour changed
-- [ ] Trackmania colour codes stripped from names
-- [ ] The overlay stays quiet: no animation that pulls attention from the game
-- [ ] I read `CONTRIBUTING.md` and kept the change small enough to review
+- [ ] Uses only documented public `GET` endpoints from `docs/API-NOTES.md`
+- [ ] Strips Trackmania formatting/colour codes (`$f00`, `$i`, etc.) from rendered names
+- [ ] Keeps the overlay distraction-free (no noisy animations that pull focus from gameplay)
+- [ ] Tests added or updated for behaviour changes
