@@ -1,0 +1,30 @@
+name: Feature request
+description: Suggest an idea or enhancement for Kacky Live.
+title: "feat: "
+labels:
+  - enhancement
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Have an idea for Kacky Live? Let us know what you'd like to see!
+        Tip: Kacky Live is a client-side browser overlay powered by the public KackyGG API.
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem or use case
+      description: What is hard, missing, or could be improved?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed idea
+      description: Describe what you would like to see happen.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: What else did you try or consider?

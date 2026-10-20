@@ -1,0 +1,50 @@
+name: Bug report
+description: Report a problem with the overlay or documentation.
+title: "bug: "
+labels:
+  - bug
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting! Please keep descriptions clear and reproducible.
+        If you suspect a security issue, report it privately via [SECURITY.md](https://github.com/kacky-code/kacky-live/blob/main/SECURITY.md).
+  - type: textarea
+    id: happened
+    attributes:
+      label: What happened
+      description: Describe the actual result.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What you expected
+      description: Describe the result you expected.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: List the steps that reproduce the problem.
+      placeholder: |
+        1. Open the overlay with ...
+        2. Wait for ...
+        3. See ...
+    validations:
+      required: true
+  - type: input
+    id: versions
+    attributes:
+      label: Browser and OBS version
+      description: Optional for doc bugs; helpful for overlay or visual issues.
+      placeholder: Chrome 130, OBS Studio 31.0
+    validations:
+      required: false
+  - type: textarea
+    id: screenshot
+    attributes:
+      label: Screenshot
+      description: For visual bugs, attach a screenshot or GIF.
+      placeholder: Drag a screenshot here or paste a link.

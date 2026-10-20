@@ -1,80 +1,69 @@
 # Kacky Live
 
-Read-only streamer overlays and a Twitch surface for Kacky events.
+[![License: GPL-3.0](https://img.shields.io/badge/license-GPL--3.0-FF7800)](LICENSE)
 
-Kacky Live is an open source project. It reads public `GET /v1/...` endpoints from the
-[KackyGG API](https://api.kacky.gg/v1) and renders them for streamers. It never writes to the API,
-the game servers or the kontrol stream contract.
+Clean, read-only broadcast overlays for [Kacky](https://kacky.gg) events. Kacky Live gives streamers an always-current board for the active map, top records, server queue, and top donors—right inside OBS without needing another browser tab on screen.
 
-## Status
+Built for Kacky streamers and viewers, Kacky Live runs entirely in the browser on top of the public KackyGG API ([`docs/API-NOTES.md`](docs/API-NOTES.md)). Because it is lightweight and strictly read-only, anyone can run it locally, test against live data, and contribute widgets without needing backend credentials or server access.
 
-Planning. Phase 0 is a one-page spec and a mockup. There is no application code yet.
+**Current Status:** Planning ([Phase 0](https://github.com/kacky-code/kacky-live/milestone/1)). We are locking in the layout spec and mockup before scaffolding the app. Check the [open issues](https://github.com/kacky-code/kacky-live/issues) to jump in.
 
-See the [open issues](https://github.com/kacky-code/kacky-live/issues) for the current work.
+## Roadmap
 
-## Why a separate app
+| Phase | Goal | Status |
+|---|---|---|
+| [Phase 0: spec and mockup](https://github.com/kacky-code/kacky-live/milestone/1) | Finalize layout, data polling, and fallback states before writing code | In progress |
+| [Phase 1: overlay MVP](https://github.com/kacky-code/kacky-live/milestone/2) | Ship the 1920x1080 OBS browser source with core widgets | Planned |
+| [Phase 2: Twitch panel extension](https://github.com/kacky-code/kacky-live/milestone/3) | Bring the same data layer to a Twitch panel once the OBS overlay is proven | Optional |
 
-- Zero blast radius. No writes, no database, no secrets and no deploy rights on the core stack.
-- The data already exists on the public API.
-- The overlay can be tested on live KR7 streams without touching the event.
+## What We're Building
 
-## What we are building
+### Phase 1: OBS Overlay
 
-### Phase 1: OBS overlay
+A `1920x1080` transparent browser source for OBS, configured entirely via URL parameters:
 
-A 1920x1080 transparent browser source for OBS. The streamer configures it with a URL:
-
-```
+```text
 https://<host>/overlay?server=<server-login>&player=<player-login>
 ```
 
-Widgets:
+- `server` (required): The Kacky server login to track.
+- `player` (optional): Highlights the streamer's own record in the top 5 board when set.
 
-- Event name and day N of M.
-- Current map, author time and world record.
-- Top 5 records on the current map.
-- The next maps in the server queue.
-- Top donors over the last 90 days.
+#### Core Widgets
 
-The overlay keeps the last good state when the API fails. It never shows an error or a stack trace
-on stream.
+- **Event Header:** Active event title and current day (Day N of M).
+- **Map Card:** Current map number/name, author time, and world record.
+- **Top 5 Records:** Live top 5 leaderboard for the active map.
+- **Server Queue:** Next maps coming up on the server.
+- **Top Donors:** Top supporters over the last 90 days.
 
-### Phase 2: Twitch panel extension
+#### Stream-Safe by Design
 
-Optional, and only after phase 1 is used by a real streamer. It reuses the same data layer and adds
-a Twitch configuration page.
+- **Quiet visuals:** High contrast for readability over Trackmania stadium surfaces, with zero distracting animations during runs.
+- **Graceful fallbacks:** If an API request fails or times out, the overlay holds the last known good state and never flashes error popups or stack traces on stream.
 
-## Non-goals
+### Phase 2: Twitch Panel Extension
 
-- No new backend endpoints.
-- No admin panel, auth or user accounts.
-- No live donation stream in phase 1. The public top-donors endpoint is polled.
-- No scraping and no undocumented endpoints.
-- No changes to `kacky-ds` or the main website.
-- No production database, SSH, vault or deploy access.
+Once the OBS overlay is battle-tested on live streams, Phase 2 reuses the same API client to power a viewer-facing Twitch panel extension.
 
 ## Documentation
 
-- [`CONTRIBUTING.md`](CONTRIBUTING.md): the workflow and the review rules.
-- [`docs/SPEC-TEMPLATE.md`](docs/SPEC-TEMPLATE.md): the phase 0 deliverable.
-- [`docs/API-NOTES.md`](docs/API-NOTES.md): the public endpoints and their shapes.
+- [`CONTRIBUTING.md`](CONTRIBUTING.md) – Workflow, design rules, and PR guidelines.
+- [`docs/API-NOTES.md`](docs/API-NOTES.md) – Public KackyGG `/v1` endpoints, payload fields, and polling intervals.
+- [`docs/SPEC-TEMPLATE.md`](docs/SPEC-TEMPLATE.md) – Structure for the Phase 0 layout and state spec.
+- [`CODE_OF_CONDUCT.md`](CODE_OF_CONDUCT.md) – Community guidelines.
 
 ## Contributing
 
-Contributions are welcome. Open an issue before a large change, work on a branch and open a pull
-request against `main`. See [`CONTRIBUTING.md`](CONTRIBUTING.md) for the details.
+We want Kacky Live to be easy and fun to contribute to. A great place to start right now is Issue [#10: OBS setup docs and URL config page](https://github.com/kacky-code/kacky-live/issues/10), or weighing in on the layout spec in Issue [#1](https://github.com/kacky-code/kacky-live/issues/1).
+
+- Browse [`good first issue`](https://github.com/kacky-code/kacky-live/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22) and [`help wanted`](https://github.com/kacky-code/kacky-live/issues?q=is%3Aissue+is%3Aopen+label%3A%22help+wanted%22).
+- Check [`CONTRIBUTING.md`](CONTRIBUTING.md) before opening a pull request.
 
 ## Maintainers
 
-- [@Thorbenl](https://github.com/Thorbenl)
-- [@bompi-me](https://github.com/bompi-me)
+Maintained by [@Thorbenl](https://github.com/Thorbenl) and [@bompi-me](https://github.com/bompi-me).
 
-Only the maintainers merge to `main`. Everyone else can contribute through forks and pull requests.
+## Security & Licence
 
-## Security
-
-Do not open a public issue for a security problem. See [`SECURITY.md`](SECURITY.md).
-
-## Licence
-
-[GNU General Public License v3.0](LICENSE).
+Please report security issues privately via [SECURITY.md](SECURITY.md). Licensed under the [GNU General Public License v3.0](LICENSE).
