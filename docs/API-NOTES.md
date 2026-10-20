@@ -1,4 +1,4 @@
-# API notes
+# API Notes
 
 The overlay reads the public KackyGG API. All paths below are under `/v1`.
 
@@ -7,15 +7,13 @@ The overlay reads the public KackyGG API. All paths below are under `/v1`.
 | Production | `https://api.kacky.gg/v1` |
 | Development | `https://api-dev.kacky.gg/v1` |
 
-## Rules
+## Conventions
 
-- Anonymous `GET` only. No writes, no auth, no cookies.
-- Do not scrape the website. Use these endpoints.
-- Do not call the OpenAPI document in production. It is not served there.
-- Poll politely. The intervals in the overlay spec are the starting point.
-- The API returns `{ data, meta }` for paged endpoints, not a bare array.
-- A missing or private server answers `404`. Treat it as "hide the widget", not as an error.
-- `GET /events/active` answers `404` when no event is running.
+- **Authentication:** None required. All endpoints are unauthenticated public `GET` requests.
+- **Payload Shape:** Paginated endpoints return `{ data, meta }`.
+- **Polling Intervals:** We suggest 20s for active game state (current map, records, queue) and 60s for event metadata or donor standings.
+- **Inactive / Fallback States:** Inactive events or private servers return `404`. Hold the last known good state or hide the affected widget cleanly rather than displaying errors on stream.
+- **OpenAPI:** OpenAPI docs are internal and not served in production.
 
 ## Endpoints
 
@@ -59,7 +57,7 @@ The world record is rank 1. The overlay does not need a separate WR endpoint.
 
 Paged event leaderboard. Query: `eventId`, `limit`, `offset`.
 
-Use this only if the spec adds an event standings widget.
+Use this only if adding an event standings widget.
 
 ### `GET /supporters/top-donors`
 
@@ -79,13 +77,14 @@ Only `fresh` is current. A `stale` or `unavailable` answer may carry an earlier 
 ## CORS
 
 The API allows a fixed origin list. The overlay origin must be added for the deployed host.
-Local development on `http://localhost:5173` may already be allowed for another app. Confirm
-before relying on it.
+Local development on `http://localhost:5173` may already be allowed.
 
 If adding the origin is not possible, use a small Cloudflare Pages Function that proxies the
-same paths. Do not put an API key in the client.
+same paths.
 
-## Rate limits
+## Polling & Rate Limits
 
-There is no public rate limit for these endpoints today. Do not treat that as permission to poll
-every second. One overlay per streamer, 20 to 60 second polls, and backoff on errors.
+The public API does not currently enforce a rigid rate limit, but client apps must poll responsibly:
+- Aim for 20–60 second poll intervals depending on the widget.
+- Back off exponentially on repeated network errors or 5xx responses.
+- Pause polling when the document or tab is hidden.

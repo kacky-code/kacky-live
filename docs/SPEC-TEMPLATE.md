@@ -1,66 +1,47 @@
-# Overlay spec
+# Overlay Spec Template
 
-Fill this in before writing code. Keep it to one page. Attach one mockup image.
+Use this template to propose a layout or widget spec before implementing. Keep it concise (1–2 pages) and include a mockup or wireframe.
 
-## 1. User and channel
+## 1. Context & Surface
 
-Who is the streamer? Which channel and language? What does their overlay look like today?
+- **Target Surface:** OBS browser source (1920x1080 transparent), Twitch panel, or both.
+- **Use Case:** Streamer overlay during live hunting, tournament broadcast, etc.
 
-## 2. Surface
+## 2. URL Parameters
 
-OBS browser source, Twitch panel extension, or both? Which resolution and safe area?
+List query parameters, defaults, and validation rules.
 
-## 3. URL
-
-List every query parameter, its default and its validation rule.
-
-```
-/overlay?server=...&player=...&theme=...
+```text
+/overlay?server=<server-login>&player=<player-login>&theme=<theme-id>
 ```
 
-## 4. Data
+## 3. Data & Polling
 
-| Widget | Endpoint | Fields | Poll |
+| Widget | Endpoint | Key Fields | Suggested Poll |
 |---|---|---|---|
 | Event header | `GET /v1/events/active` | `name`, `edition`, `startTime`, `endTime` | 60 s |
 | Current map | `GET /v1/servers/{login}/maps` | `currentMap` | 20 s |
-| Map detail | `GET /v1/maps/{number}` | `name`, `authorTime`, `imageUrl`, `totalFinishers` | on map change |
-| Top 5 | `GET /v1/maps/{number}/records?limit=5` | `rank`, `nickname`, `score` | 20 s |
-| Next maps | `GET /v1/servers/{login}/maps` | `nextMaps` | 20 s |
+| Map detail | `GET /v1/maps/{number}` | `name`, `authorTime`, `imageUrl`, `totalFinishers` | On map change |
+| Top 5 records | `GET /v1/maps/{number}/records?limit=5` | `rank`, `nickname`, `score` | 20 s |
+| Server queue | `GET /v1/servers/{login}/maps` | `nextMaps` | 20 s |
 | Top donors | `GET /v1/supporters/top-donors?days=90&limit=5` | `rank`, `name`, `amount` | 60 s |
 
-Add or remove rows to match the mockup.
+## 4. Layout & Visuals
 
-## 5. Layout
+Attach a mockup image or ASCII wireframe. Describe positioning, typography hierarchy, and contrast for Trackmania backdrops.
 
-Describe each block: position, size, type level, colour. One mockup image is enough.
+## 5. UI States & Fallbacks
 
-## 6. States
+For each widget, specify:
+- **Loading:** Skeleton placeholder or transparent space.
+- **Error / Offline:** Hold last known state; do not show error popups or stack traces on stream.
+- **Empty:** Clean empty state or hidden widget.
+- **Overflow:** Truncation rule for long map or player names.
 
-For each widget, write what shows when:
+## 6. Acceptance & Testing
 
-- the first request is loading,
-- the request fails,
-- the response is empty,
-- the value is too long.
-
-## 7. Configuration
-
-What can the streamer change? URL only, or a config page? Which values are validated?
-
-## 8. Acceptance
-
-Write the checks a reviewer will run. Example:
-
-- The overlay renders the current KR7 map within 20 seconds of opening.
-- Killing the API for 5 minutes leaves the last map and top 5 on screen.
-- A map name longer than 40 characters truncates without moving the layout.
-- The streamer can build the URL from the config page in under 5 minutes.
-
-## 9. Non-goals
-
-List what this version will not do.
-
-## 10. Open questions
-
-List the decisions that need a maintainer.
+Key sanity checks to verify the implementation:
+- Renders cleanly in OBS browser source at 1920x1080 without scrollbars.
+- Holds last good state across network timeouts.
+- Player nicknames strip Trackmania style/color codes (`$f00`, `$i`, etc.).
+- Performance stays light with zero impact on stream frame rates.
