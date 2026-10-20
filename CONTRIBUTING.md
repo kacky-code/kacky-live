@@ -2,6 +2,8 @@
 
 Kacky Live is an open source project. Keep changes small and easy to review.
 
+By participating, you agree to follow the [`CODE_OF_CONDUCT.md`](CODE_OF_CONDUCT.md).
+
 ## Workflow
 
 - Work on a branch. Never push to `main`.

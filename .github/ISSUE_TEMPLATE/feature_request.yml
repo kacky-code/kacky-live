@@ -1,0 +1,41 @@
+name: Feature request
+description: Suggest a change for the overlay or the project.
+title: "feat: "
+labels:
+  - enhancement
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Describe the problem first. A solution is easier to review when we understand the use case.
+
+        Kacky Live is read-only. It uses public `GET` endpoints and does not add backend endpoints.
+  - type: textarea
+    id: problem
+    attributes:
+      label: The problem
+      description: What is hard, missing or confusing today?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: The proposed change
+      description: Describe the behaviour you want and where it appears.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: What else did you try or consider?
+  - type: checkboxes
+    id: scope
+    attributes:
+      label: Scope check
+      description: If either answer is no, this request is outside the current scope. Open a question issue first. The API is owned by another project.
+      options:
+        - label: This request works with public `GET` endpoints only.
+          required: true
+        - label: This request does not need a new backend endpoint.
+          required: true
